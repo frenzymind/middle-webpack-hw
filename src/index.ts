@@ -1,7 +1,7 @@
 import './styles.scss'
-import { ISoundData, soundsData } from './sounds-data'
-const root = document.getElementById('app')!
-const body = document.querySelector('body')!
+import { type ISoundData, soundsData } from './sounds-data'
+const root = document.getElementById('app')
+const body = document.querySelector('body')
 
 let currentSound: ISoundData | undefined
 let currentIcon: HTMLImageElement | undefined
@@ -60,7 +60,9 @@ function createDomElement<T extends HTMLElement>(tagName: string, classes: strin
 }
 
 function render(domElement: HTMLElement) {
-  root.append(domElement)
+  if (root) {
+    root.append(domElement)
+  }
 }
 
 function playSound(sound: ISoundData, img: HTMLImageElement) {
@@ -103,5 +105,7 @@ function setVolume(volume: string) {
 }
 
 function changeBackground(sound: ISoundData) {
-  body.style.backgroundImage = `url('./assets/${sound.bg}')`
+  if (body) {
+    body.style.backgroundImage = `url('./assets/${sound.bg}')`
+  }
 }
