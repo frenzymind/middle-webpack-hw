@@ -31,10 +31,10 @@ render($volume)
 
 function createSoundElement(sound: ISoundData) {
   const wraper = createDomElement('div', 'sound')
-  wraper.style.backgroundImage = `url(/assets/${sound.bg})`
+  wraper.style.backgroundImage = `url(assets/${sound.bg})`
 
   const img = createDomElement<HTMLImageElement>('img', 'icon')
-  img.src = `/assets/icons/${sound.icon}`
+  img.src = `assets/icons/${sound.icon}`
   img.dataset[DATASET_ID] = sound.id
 
   wraper.appendChild(img)
@@ -100,13 +100,13 @@ function playSound(sound: ISoundData, img: HTMLImageElement) {
   if (currentSound.file !== sound.file || inited === false) {
     inited = true
 
-    currentIcon.src = `/assets/icons/${currentSound.icon}`
+    currentIcon.src = `assets/icons/${currentSound.icon}`
 
     currentSound = sound
     currentIcon = img
 
     $player.src = `assets/sounds/${sound.file}`
-    img.src = `/assets/icons/pause.svg`
+    img.src = `assets/icons/pause.svg`
     changeBackground(sound)
     $player.play()
     return
@@ -114,10 +114,10 @@ function playSound(sound: ISoundData, img: HTMLImageElement) {
 
   if (isPaused) {
     $player.play()
-    img.src = `/assets/icons/pause.svg`
+    img.src = `assets/icons/pause.svg`
   } else {
     $player.pause()
-    img.src = `/assets/icons/${sound.icon}`
+    img.src = `assets/icons/${sound.icon}`
   }
 }
 
@@ -127,6 +127,6 @@ function setVolume(volume: string) {
 
 function changeBackground(sound: ISoundData) {
   if (body) {
-    body.style.backgroundImage = `url('./assets/${sound.bg}')`
+    body.style.backgroundImage = `url('assets/${sound.bg}')`
   }
 }
