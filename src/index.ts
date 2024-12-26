@@ -1,5 +1,8 @@
 import './styles.scss'
 import { type ISoundData, soundsData } from './sounds-data'
+
+const DATASET_ID = 'soundId'
+
 const root = document.getElementById('app')
 const body = document.querySelector('body')
 
@@ -15,6 +18,7 @@ $title.textContent = 'Weather sound'
 render($title)
 
 const $soundsContainer = createDomElement('h1', 'sounds-container')
+$soundsContainer.addEventListener('click', event => handleSoundClick(event))
 soundsData.forEach(sound => {
   const $sound = createSoundElement(sound)
   $soundsContainer.appendChild($sound)
@@ -31,7 +35,7 @@ function createSoundElement(sound: ISoundData) {
 
   const img = createDomElement<HTMLImageElement>('img', 'icon')
   img.src = `/assets/icons/${sound.icon}`
-  img.addEventListener('click', () => playSound(sound, img))
+  img.dataset[DATASET_ID] = sound.id
 
   wraper.appendChild(img)
 
@@ -62,6 +66,23 @@ function createDomElement<T extends HTMLElement>(tagName: string, classes: strin
 function render(domElement: HTMLElement) {
   if (root) {
     root.append(domElement)
+  }
+}
+
+function handleSoundClick(event: MouseEvent) {
+  event.preventDefault()
+  event.stopPropagation()
+
+  const soundId = (event.target as HTMLElement).dataset[DATASET_ID]
+
+  if (!soundId) return
+
+  const soundData = soundsData.find(data => data.id === soundId)
+
+  const $soundIcon = event.target as HTMLImageElement
+
+  if (soundData) {
+    playSound(soundData, $soundIcon)
   }
 }
 
